@@ -32,18 +32,24 @@ namespace Contoso.Repository
     public interface IContosoRepository
     {
         /// <summary>
-        /// Returns the customers repository.
+        /// returns disciplines repository
         /// </summary>
-        ICustomerRepository Customers { get; }
-
+        IDisciplineRepository Disciplines { get; }
         /// <summary>
-        /// Returns the orders repository.
+        /// returns the groups repository
         /// </summary>
-        IOrderRepository Orders { get; }
-
+        IGroupRepository Groups { get; }
         /// <summary>
-        /// Returns the products repository.
+        /// returns the positions repository
         /// </summary>
-        IProductRepository Products { get;  }
+        IPositionRepository Positions { get; }
+        /// <summary>
+        /// returns the teachers repository
+        /// </summary>
+        ITeacherRepository Teachers { get; }
+        /// <summary>
+        /// returns the users repository
+        /// </summary>
+        IUserRepository Users { get; }
     }
 }

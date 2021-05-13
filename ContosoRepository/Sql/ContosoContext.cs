@@ -37,25 +37,25 @@ namespace Contoso.Repository.Sql
         /// </summary>
         public ContosoContext(DbContextOptions<ContosoContext> options) : base(options)
         { }
-
         /// <summary>
-        /// Gets the customers DbSet.
+        /// Gets disciplines DbSet.
         /// </summary>
-        public DbSet<Customer> Customers { get; set; }
-
+        public DbSet<Discipline> Disciplines { get; set; }
         /// <summary>
-        /// Gets the orders DbSet.
+        /// Gets groups DbSet.
         /// </summary>
-        public DbSet<Order> Orders { get; set; }
-
+        public DbSet<Group> Groups { get; set; }
         /// <summary>
-        /// Gets the products DbSet.
+        /// Gets positions DbSet.
         /// </summary>
-        public DbSet<Product> Products { get; set; }
-
+        public DbSet<Position> Positions { get; set; }
         /// <summary>
-        /// Gets the line items DbSet.
+        /// Gets teachers DbSet.
         /// </summary>
-        public DbSet<LineItem> LineItems { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        /// <summary>
+        /// Gets users DbSet.
+        /// </summary>
+        public DbSet<User> Users { get; set; }
     }
 }

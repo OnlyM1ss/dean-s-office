@@ -22,7 +22,9 @@
 //  THE SOFTWARE.
 //  ---------------------------------------------------------------------------------
 
+using System.Net;
 using Contoso.Models;
+using Contoso.Repository.Sql;
 
 namespace Contoso.Repository.Rest
 {
@@ -38,10 +40,10 @@ namespace Contoso.Repository.Rest
             _url = url; 
         }
 
-        public ICustomerRepository Customers => new RestCustomerRepository(_url); 
-
-        public IOrderRepository Orders => new RestOrderRepository(_url);
-
-        public IProductRepository Products => new RestProductRepository(_url); 
+        public IDisciplineRepository Disciplines => ;
+        public IGroupRepository Groups { get; } =>
+        public IPositionRepository Positions { get; }
+        public ITeacherRepository Teachers { get; }
+        public IUserRepository Users { get; }
     }
 }
