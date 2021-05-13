@@ -11,13 +11,16 @@ namespace Contoso.Repository.Sql
     public class RestUserRepository : IUserRepository
     {
         private readonly HttpHelper _http;
-        private readonly ContosoContext _db;
         public RestUserRepository(string baseUrl)
         {
             _http = new HttpHelper(baseUrl);
         }
 
-        public Task<IEnumerable<User>> GetAsync() => throw new NotImplementedException();}
+
+        public Task<IEnumerable<User>> GetAsync()
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<User> GetAsync(string search)
         {

@@ -6,7 +6,6 @@ namespace Contoso.Models
 {
     public class Group : DbObject, IEquatable<Group>
     {
-    {
         /// <summary>
         /// Факультет
         /// </summary>

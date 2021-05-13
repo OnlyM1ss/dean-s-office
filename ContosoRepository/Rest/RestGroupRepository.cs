@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
+using Contoso.Repository.Rest;
 
 namespace Contoso.Repository.Sql
 {
     public class RestGroupRepository : IGroupRepository
     {
-        private readonly ContosoContext _db;
+        private readonly HttpHelper _httpHelper;
 
-        public RestGroupRepository(ContosoContext db)
+        public RestGroupRepository(string baseUrl)
         {
-            _db = db;
+            _httpHelper = new HttpHelper(baseUrl);
         }
 
         public Task<IEnumerable<Group>> GetAsync()

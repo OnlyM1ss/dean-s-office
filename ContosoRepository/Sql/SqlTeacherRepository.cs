@@ -23,7 +23,7 @@ namespace Contoso.Repository.Sql
                 .ToListAsync();
         }
 
-        public Task<Teacher> GetAsync(string search)
+        public Task<IEnumerable<Teacher>> GetAsync(string search)
         {
            throw  new NotImplementedException();
         }

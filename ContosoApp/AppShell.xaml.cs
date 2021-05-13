@@ -113,14 +113,14 @@ namespace Contoso.App
         private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
             var label = args.InvokedItem as string;
-            var pageType =
-                args.IsSettingsInvoked ? typeof(SettingsPage) :
-                label == CustomerListLabel ? typeof(CustomerListPage) :
-                label == OrderListLabel ? typeof(OrderListPage) : null;
-            if (pageType != null && pageType != AppFrame.CurrentSourcePageType)
-            {
-                AppFrame.Navigate(pageType);
-            }
+            //var pageType =
+                //args.IsSettingsInvoked ? typeof(SettingsPage) :
+                //label == CustomerListLabel ? typeof(CustomerListPage) :
+               // label == OrderListLabel ? typeof(OrderListPage) : null;
+            //if (pageType != null && pageType != AppFrame.CurrentSourcePageType)
+            //{
+            //    AppFrame.Navigate(pageType);
+            //}
         }
 
         /// <summary>
@@ -129,21 +129,21 @@ namespace Contoso.App
         /// </summary>
         private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                if (e.SourcePageType == typeof(CustomerListPage))
-                {
-                    NavView.SelectedItem = CustomerListMenuItem;
-                }
-                else if (e.SourcePageType == typeof(OrderListPage))
-                {
-                    NavView.SelectedItem = OrderListMenuItem;
-                }
-                else if (e.SourcePageType == typeof(SettingsPage))
-                {
-                    NavView.SelectedItem = NavView.SettingsItem;
-                }
-            }
+            //if (e.NavigationMode == NavigationMode.Back)
+            //{
+            //    if (e.SourcePageType == typeof(CustomerListPage))
+            //    {
+            //        NavView.SelectedItem = CustomerListMenuItem;
+            //    }
+            //    else if (e.SourcePageType == typeof(OrderListPage))
+            //    {
+            //        NavView.SelectedItem = OrderListMenuItem;
+            //    }
+            //    else if (e.SourcePageType == typeof(SettingsPage))
+            //    {
+            //        NavView.SelectedItem = NavView.SettingsItem;
+            //    }
+            //}
         }
 
         /// <summary>

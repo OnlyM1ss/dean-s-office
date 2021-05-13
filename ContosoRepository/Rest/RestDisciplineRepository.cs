@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
+using Contoso.Repository.Rest;
 
 namespace Contoso.Repository.Sql
 {
     public class RestDisciplineRepository : IDisciplineRepository
     {
-        private readonly ContosoContext _db;
+        private readonly HttpHelper _httpHelper;
 
-        public RestDisciplineRepository(ContosoContext db)
+        public RestDisciplineRepository(string baseUrl)
         {
-            _db = db;
+            _httpHelper = new HttpHelper(baseUrl);
         }
 
 

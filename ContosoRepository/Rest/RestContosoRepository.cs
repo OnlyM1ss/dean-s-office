@@ -40,10 +40,10 @@ namespace Contoso.Repository.Rest
             _url = url; 
         }
 
-        public IDisciplineRepository Disciplines => ;
-        public IGroupRepository Groups { get; } =>
-        public IPositionRepository Positions { get; }
-        public ITeacherRepository Teachers { get; }
-        public IUserRepository Users { get; }
+        public IDisciplineRepository Disciplines => new RestDisciplineRepository(_url);
+        public IGroupRepository Groups => new RestGroupRepository(_url);
+        public IPositionRepository Positions => new RestPositionRepository(_url);
+        public ITeacherRepository Teachers => new RestTeacherRepository(_url);
+        public IUserRepository Users => new RestUserRepository(_url);
     }
 }

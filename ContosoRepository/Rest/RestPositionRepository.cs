@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
+using Contoso.Repository.Rest;
 
 namespace Contoso.Repository.Sql
 {
     public class RestPositionRepository : IPositionRepository
     {
-        private readonly ContosoContext _db;
+        private readonly HttpHelper _http;
 
-        public RestPositionRepository(ContosoContext db)
+        public RestPositionRepository(string baseUrl)
         {
-            _db = db;
+            _http = new HttpHelper(baseUrl);
         }
-
         public Task<IEnumerable<Position>> GetAsync()
         {
             throw new NotImplementedException();

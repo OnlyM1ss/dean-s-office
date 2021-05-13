@@ -42,7 +42,7 @@ namespace Contoso.App.Views
         {
             InitializeComponent();
 
-            if (App.Repository.GetType() == typeof(SqlContosoRepository))
+            if (App.Repository is Nullable)
             {
                 SqliteRadio.IsChecked = true;
             }

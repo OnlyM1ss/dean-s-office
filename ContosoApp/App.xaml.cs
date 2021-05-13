@@ -88,8 +88,8 @@ namespace Contoso.App
             {
                 // When the navigation stack isn't restored, navigate to the first page
                 // suppressing the initial entrance animation.
-                shell.AppFrame.Navigate(typeof(CustomerListPage), null,
-                    new SuppressNavigationTransitionInfo());
+                //shell.AppFrame.Navigate(typeof(CustomerListPage), null,
+                //    new SuppressNavigationTransitionInfo());
             }
 
             Window.Current.Activate();
@@ -109,7 +109,7 @@ namespace Contoso.App
             }
             var dbOptions = new DbContextOptionsBuilder<ContosoContext>().UseSqlite(
                 "Data Source=" + databasePath);
-            Repository = new SqlContosoRepository(dbOptions);
+            //Repository = new SqlContosoRepository(dbOptions);
         }
 
         /// <summary>
