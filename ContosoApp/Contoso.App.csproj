@@ -108,12 +108,6 @@
     </Compile>
     <Compile Include="ViewModels\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
-    <Compile Include="ViewModels\Exceptions.cs" />
-    <Compile Include="ViewModels\LineItemViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\CustomerViewModel.cs" />
-    <Compile Include="ViewModels\OrderViewModel.cs" />
-    <Compile Include="ViewModels\OrderListPageViewModel.cs" />
     <Compile Include="Views\CustomerDetailPage.xaml.cs">
       <DependentUpon>CustomerDetailPage.xaml</DependentUpon>
     </Compile>
