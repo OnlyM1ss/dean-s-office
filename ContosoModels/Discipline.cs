@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +7,7 @@ namespace Contoso.Models
 {
     public class Discipline : DbObject, IEquatable<Discipline>
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
         public int AcademyHours { get; set; }
 
         public bool Equals(Discipline other)
@@ -28,7 +29,7 @@ namespace Contoso.Models
         {
             unchecked
             {
-                return (Name * 397) ^ AcademyHours;
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ AcademyHours;
             }
         }
     }

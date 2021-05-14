@@ -45,15 +45,30 @@
 
             <MUXC:NavigationView.MenuItems>
                 <MUXC:NavigationViewItem
-                    x:Name="CustomerListMenuItem"
-                    Content="{x:Bind CustomerListLabel}" 
-                    ToolTipService.ToolTip="{x:Bind CustomerListLabel}"
-                    Icon="ContactInfo"/>
+                    x:Name="GroupListMenuItem"
+                    Content="{x:Bind GroupListLabel}" 
+                    ToolTipService.ToolTip="{x:Bind GroupListLabel}"
+                    Icon="People"/>
                 <MUXC:NavigationViewItem
-                    x:Name="OrderListMenuItem"
-                    Content="{x:Bind OrderListLabel}" 
-                    ToolTipService.ToolTip="{x:Bind OrderListLabel}"
-                    Icon="Shop"/>
+                    x:Name="DisciplineListMenuItem"
+                    Content="{x:Bind DisciplineListLabel}" 
+                    ToolTipService.ToolTip="{x:Bind DisciplineListLabel}"
+                    Icon="Folder"/>
+                <MUXC:NavigationViewItem
+                    x:Name="PositionListMenuItem"
+                    Content="{x:Bind PositionListLabel}" 
+                    ToolTipService.ToolTip="{x:Bind PositionListLabel}"
+                    Icon="FourBars"/>
+                <MUXC:NavigationViewItem
+                    x:Name="TeacherListMenuItem"
+                    Content="{x:Bind TeacherListLabel}" 
+                    ToolTipService.ToolTip="{x:Bind TeacherListLabel}"
+                    Icon="Emoji2"/>
+                <MUXC:NavigationViewItem
+                    x:Name="UserListMenuItem"
+                    Content="{x:Bind UserListLabel}" 
+                    ToolTipService.ToolTip="{x:Bind UserListLabel}"
+                    Icon="ContactInfo"/>
             </MUXC:NavigationView.MenuItems>
 
             <MUXC:NavigationView.PaneFooter>

@@ -46,9 +46,11 @@ namespace Contoso.Service
         {
             var db = new ContosoContext(new DbContextOptionsBuilder<ContosoContext>()
                 .UseSqlServer(Constants.SqlAzureConnectionString).Options);
-            services.AddScoped<ICustomerRepository, SqlCustomerRepository>(_ => new SqlCustomerRepository(db));
-            services.AddScoped<IOrderRepository, SqlOrderRepository>(_ => new SqlOrderRepository(db));
-            services.AddScoped<IProductRepository, SqlProductRepository>(_ => new SqlProductRepository(db)); 
+            services.AddScoped<IUserRepository, SqlUserRepository>(_ => new SqlUserRepository(db));
+            services.AddScoped<IGroupRepository, SqlGroupRepository>(_ => new SqlGroupRepository(db));
+            services.AddScoped<IDisciplineRepository, SqlDisciplineRepository>(_ => new SqlDisciplineRepository(db));
+            services.AddScoped<IPositionRepository, SqlPositionRepository>(_ => new SqlPositionRepository(db));
+            services.AddScoped<ITeacherRepository, SqlTeacherRepository>(_ => new SqlTeacherRepository(db));
             services.AddMvc();
         }
 
