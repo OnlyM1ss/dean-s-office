@@ -174,7 +174,60 @@
                             KeyDown="DataGrid_KeyDown"
                             Sorting="DataGrid_Sorting"
                             RightTapped="DataGrid_RightTapped"
-                            ContextFlyout="{StaticResource DataGridContextMenu}" />
+                            ContextFlyout="{StaticResource DataGridContextMenu}" >
+                            <toolkit:DataGrid.Columns>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="FirstName"
+                                    Tag="FirstName">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:User">
+                                            <HyperlinkButton
+                                                Content="{x:Bind FirstName}"
+                                                Margin="12,0"
+                                                Click="ViewUserButton_Click"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="LastName"
+                                    Tag="LastName">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:User">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Margin="12,0"
+                                                Text="{x:Bind LastName}"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="Login"
+                                    Tag="Login">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:User">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Margin="12,0"
+                                                Text="{x:Bind Login}"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="Role"
+                                    Tag="Role">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:User">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Margin="12,0"
+                                                Text="{x:Bind Role}"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+
+                            </toolkit:DataGrid.Columns>
+
+                        </toolkit:DataGrid>
 
                         <MUXC:ProgressBar
                             Margin="0,50,0,0"

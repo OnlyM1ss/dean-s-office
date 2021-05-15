@@ -166,9 +166,37 @@
                             KeyDown="DataGrid_KeyDown"
                             Sorting="DataGrid_Sorting"
                             RightTapped="DataGrid_RightTapped"
-                            ContextFlyout="{StaticResource DataGridContextMenu}" />
+                            ContextFlyout="{StaticResource DataGridContextMenu}" >
+                            <toolkit:DataGrid.Columns>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="Faculty"
+                                    Tag="Faculty">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:Group">
+                                            <HyperlinkButton
+                                                Content="{x:Bind Faculty}"
+                                                Margin="12,0"
+                                                Click="ViewGroupButton_Click"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="Count"
+                                    Tag="Count">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:Group">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Margin="12,0"
+                                                Text="{x:Bind Count}"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                            </toolkit:DataGrid.Columns>
 
-                        <MUXC:ProgressBar
+                        </toolkit:DataGrid>
+
+                            <MUXC:ProgressBar
                             Margin="0,50,0,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"

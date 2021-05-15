@@ -79,6 +79,11 @@ namespace Contoso.App.Views
             //    (sender as CommandBar).DefaultLabelUser = CommandBarDefaultLabelUser.Right;
             //}
         }
+        private void ViewUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(UserDetailPage), ((sender as FrameworkElement).DataContext as User).Id,
+                new DrillInNavigationTransitionInfo());
+        }
 
         /// <summary>
         /// Initializes the AutoSuggestBox portion of the search box.

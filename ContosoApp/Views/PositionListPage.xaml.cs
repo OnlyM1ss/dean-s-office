@@ -65,7 +65,11 @@ namespace Contoso.App.Views
                 await dialog.ShowAsync();
             }
         }
-
+        private void ViewPositionButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(PositionDetailPage), ((sender as FrameworkElement).DataContext as Position).Id,
+                new DrillInNavigationTransitionInfo());
+        }
         /// <summary>
         /// Workaround to support earlier versions of Windows. 
         /// </summary>

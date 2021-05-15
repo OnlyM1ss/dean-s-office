@@ -44,19 +44,19 @@ namespace Contoso.App.ViewModels
         public DisciplineListPageViewModel() => IsLoading = false;
 
         /// <summary>
-        /// Gets the unfiltered collection of all orders. 
+        /// Gets the unfiltered collection of all disciplines. 
         /// </summary>
         private List<Discipline> MasterDisciplineList { get; } = new List<Discipline>();
 
         /// <summary>
-        /// Gets the orders to display.
+        /// Gets the discipline to display.
         /// </summary>
         public ObservableCollection<Discipline> Disciplines { get; private set; } = new ObservableCollection<Discipline>();
 
         private bool _isLoading;
 
         /// <summary>
-        /// Gets or sets a value that specifies whether orders are being loaded.
+        /// Gets or sets a value that specifies whether discipline are being loaded.
         /// </summary>
         public bool IsLoading
         {
@@ -67,7 +67,7 @@ namespace Contoso.App.ViewModels
         private Discipline _selectedDiscipline;
 
         /// <summary>
-        /// Gets or sets the selected order.
+        /// Gets or sets the selected discipline.
         /// </summary>
         public Discipline SelectedDiscipline
         {
@@ -76,7 +76,7 @@ namespace Contoso.App.ViewModels
             {
                 if (Set(ref _selectedDiscipline, value))
                 {
-                    // Clear out the existing customer.
+                    // Clear out the existing discipline.
                     SelectedDiscipline = null;
                     if (_selectedDiscipline != null)
                     {
@@ -88,7 +88,7 @@ namespace Contoso.App.ViewModels
         }
         public string DisciplineName { get; set; }
         /// <summary>
-        /// Gets a formatted version of the selected order's grand total value.
+        /// Gets a formatted version of the selected discipline's grand total value.
         /// </summary>
         public string SelectedDisciplineGrandTotalFormatted;
 
@@ -107,7 +107,7 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Retrieves orders from the data source.
+        /// Retrieves disciplines from the data source.
         /// </summary>
         public async void LoadDisciplines()
         {
@@ -154,18 +154,18 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Deletes the specified order from the database.
+        /// Deletes the specified discipline from the database.
         /// </summary>
         public async Task DeleteDiscipline(Discipline discipline) =>
             await App.Repository.Disciplines.DeleteAsync(discipline.Id);
 
         /// <summary>
-        /// Stores the order suggestions.
+        /// Stores the discipline suggestions.
         /// </summary>
         public ObservableCollection<Discipline> DisciplineSuggestions { get; } = new ObservableCollection<Discipline>();
 
         /// <summary>
-        /// Queries the database and updates the list of new order suggestions.
+        /// Queries the database and updates the list of new discipline suggestions.
         /// </summary>
         public void UpdateOrderSuggestions(string queryText)
         {

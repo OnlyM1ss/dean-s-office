@@ -65,6 +65,11 @@ namespace Contoso.App.Views
                 await dialog.ShowAsync();
             }
         }
+        private void ViewTeacherButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(TeacherDetailPage), ((sender as FrameworkElement).DataContext as Teacher).Id,
+                new DrillInNavigationTransitionInfo());
+        }
 
         /// <summary>
         /// Workaround to support earlier versions of Windows. 

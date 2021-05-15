@@ -67,6 +67,11 @@ namespace Contoso.App.Views
             }
         }
 
+        private void ViewDisciplineButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(DisciplineDetailPage), ((sender as FrameworkElement).DataContext as Discipline).Id,
+                new DrillInNavigationTransitionInfo());
+        }
         /// <summary>
         /// Workaround to support earlier versions of Windows. 
         /// </summary>

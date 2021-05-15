@@ -66,6 +66,11 @@ namespace Contoso.App.Views
             }
         }
 
+        private void ViewGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(GroupDetailPage), ((sender as FrameworkElement).DataContext as Group).Id,
+                new DrillInNavigationTransitionInfo());
+        }
         /// <summary>
         /// Workaround to support earlier versions of Windows. 
         /// </summary>

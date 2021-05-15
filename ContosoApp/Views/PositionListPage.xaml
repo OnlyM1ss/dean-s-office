@@ -166,7 +166,35 @@
                             KeyDown="DataGrid_KeyDown"
                             Sorting="DataGrid_Sorting"
                             RightTapped="DataGrid_RightTapped"
-                            ContextFlyout="{StaticResource DataGridContextMenu}" />
+                            ContextFlyout="{StaticResource DataGridContextMenu}" >
+                            <toolkit:DataGrid.Columns>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="Name"
+                                    Tag="Name">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:Position">
+                                            <HyperlinkButton
+                                                Content="{x:Bind Name}"
+                                                Margin="12,0"
+                                                Click="ViewPositionButton_Click"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                                <toolkit:DataGridTemplateColumn
+                                    Header="Count"
+                                    Tag="Count">
+                                    <toolkit:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="models:Position">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Margin="12,0"
+                                                Text="{x:Bind Rating}"/>
+                                        </DataTemplate>
+                                    </toolkit:DataGridTemplateColumn.CellTemplate>
+                                </toolkit:DataGridTemplateColumn>
+                            </toolkit:DataGrid.Columns>
+
+                        </toolkit:DataGrid>
 
                         <MUXC:ProgressBar
                             Margin="0,50,0,0"
