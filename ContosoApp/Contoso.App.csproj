@@ -97,6 +97,7 @@
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\Converters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateTriggers\MobileScreenTrigger.cs" />
@@ -106,16 +107,30 @@
     <Compile Include="UserControls\CollapsibleSearchBox.xaml.cs">
       <DependentUpon>CollapsibleSearchBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AuthenticationViewModel.cs" />
     <Compile Include="ViewModels\BindableBase.cs" />
-    <Compile Include="ViewModels\MainViewModelcs.cs" />
+    <Compile Include="ViewModels\DisciplineListPageViewModel.cs" />
+    <Compile Include="ViewModels\DisciplineViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\UserListPageViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\DataGridHelper.cs" />
+    <Compile Include="Views\DisciplineDetailPage.xaml.cs">
+      <DependentUpon>DisciplineDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DisciplineListPage.xaml.cs">
+      <DependentUpon>DisciplineListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PositionListPage.xaml.cs">
+      <DependentUpon>PositionListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SaveChangesDialog.xaml.cs">
       <DependentUpon>SaveChangesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeacherListPage.xaml.cs">
+      <DependentUpon>TeacherListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserListPage.xaml.cs">
       <DependentUpon>UserListPage.xaml</DependentUpon>
@@ -203,11 +218,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DisciplineDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DisciplineListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PositionListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SaveChangesDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TeacherListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,6 +269,9 @@
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.4.2</Version>
     </PackageReference>
+    <PackageReference Include="NETStandard.Library">
+      <Version>2.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ContosoModels\Contoso.Models.csproj">
@@ -251,6 +285,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Contoso.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="netstandard">
+      <HintPath>C:\Users\User\.nuget\packages\netstandard.library\2.0.3\build\netstandard2.0\ref\netstandard.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

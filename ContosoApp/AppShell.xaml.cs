@@ -48,10 +48,7 @@ namespace Contoso.App
         {
             InitializeComponent();
 
-            Loaded += (sender, args) =>
-            {
-                NavView.SelectedItem = CustomerListMenuItem;
-            };
+            Loaded += (sender, args) => { NavView.SelectedItem = DisciplineListMenuItem; };
         }
 
         /// <summary>
@@ -103,20 +100,27 @@ namespace Contoso.App
             }
         }
 
-        public readonly string CustomerListLabel = "Customer list";
+        public readonly string DisciplineListLabel = "Discipline list";
 
-        public readonly string OrderListLabel = "Order list";
+        public readonly string GroupListLabel = "Group list";
+
+        public readonly string PositionListLabel = "Position list";
+
+        public readonly string TeacherListLabel = "Teacher list";
+
+        public readonly string UserListLabel = "User list";
 
         /// <summary>
         /// Navigates to the page corresponding to the tapped item.
         /// </summary>
-        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        private void NavigationView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender,
+            Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
             var label = args.InvokedItem as string;
             //var pageType =
-                //args.IsSettingsInvoked ? typeof(SettingsPage) :
-                //label == CustomerListLabel ? typeof(CustomerListPage) :
-               // label == OrderListLabel ? typeof(OrderListPage) : null;
+            //args.IsSettingsInvoked ? typeof(SettingsPage) :
+            //label == CustomerListLabel ? typeof(CustomerListPage) :
+            // label == OrderListLabel ? typeof(OrderListPage) : null;
             //if (pageType != null && pageType != AppFrame.CurrentSourcePageType)
             //{
             //    AppFrame.Navigate(pageType);
@@ -129,21 +133,29 @@ namespace Contoso.App
         /// </summary>
         private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)
         {
-            //if (e.NavigationMode == NavigationMode.Back)
-            //{
-            //    if (e.SourcePageType == typeof(CustomerListPage))
-            //    {
-            //        NavView.SelectedItem = CustomerListMenuItem;
-            //    }
-            //    else if (e.SourcePageType == typeof(OrderListPage))
-            //    {
-            //        NavView.SelectedItem = OrderListMenuItem;
-            //    }
-            //    else if (e.SourcePageType == typeof(SettingsPage))
-            //    {
-            //        NavView.SelectedItem = NavView.SettingsItem;
-            //    }
-            //}
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                if (e.SourcePageType == typeof(UserListPage))
+                {
+                    NavView.SelectedItem = UserListMenuItem;
+                }
+                else if (e.SourcePageType == typeof(DisciplineListPage))
+                {
+                    NavView.SelectedItem = DisciplineListMenuItem;
+                }
+                else if (e.SourcePageType == typeof(TeacherListPage))
+                {
+                    NavView.SelectedItem = TeacherListMenuItem;
+                }
+                else if (e.SourcePageType == typeof(PositionListPage))
+                {
+                    NavView.SelectedItem = PositionListMenuItem;
+                }
+                else if (e.SourcePageType == typeof(SettingsPage))
+                {
+                    NavView.SelectedItem = NavView.SettingsItem;
+                }
+            }
         }
 
         /// <summary>
@@ -151,12 +163,13 @@ namespace Contoso.App
         /// </summary>
         private async void ViewCodeNavPaneButton_Tapped(object sender, TappedRoutedEventArgs e) =>
             await Launcher.LaunchUriAsync(new Uri(
-                "https://github.com/Microsoft/Windows-appsample-customers-orders-database"));
+                "https://github.com/OnlyM1ss/dean-s-office"));
 
         /// <summary>
         /// Navigates the frame to the previous page.
         /// </summary>
-        private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
+        private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender,
+            Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)
         {
             if (AppFrame.CanGoBack)
             {

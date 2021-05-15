@@ -1,4 +1,4 @@
-//  ---------------------------------------------------------------------------------
+﻿//  ---------------------------------------------------------------------------------
 //  Copyright (c) Microsoft Corporation.  All rights reserved.
 // 
 //  The MIT License (MIT)
@@ -86,7 +86,7 @@ namespace Contoso.App.ViewModels
         public string Title
         {
             get => _title;
-            set => Set(ref _title, value); 
+            set => Set(ref _title, value);
         }
 
         private string _domain;
@@ -133,7 +133,7 @@ namespace Contoso.App.ViewModels
             set => Set(ref _showWelcome, value);
         }
 
-        private bool _showLoading; 
+        private bool _showLoading;
 
         /// <summary>
         /// Gets or sets whether to show the logging in progress UI.
@@ -152,10 +152,10 @@ namespace Contoso.App.ViewModels
         public bool ShowData
         {
             get => _showData;
-            set => Set(ref _showData, value); 
+            set => Set(ref _showData, value);
         }
 
-        private bool _showError; 
+        private bool _showError;
 
         /// <summary>
         /// Gets or sets whether to show the error UI.
@@ -218,7 +218,7 @@ namespace Contoso.App.ViewModels
         private async Task<string> GetTokenAsync()
         {
             var provider = await GetAadProviderAsync();
-            var request = new WebTokenRequest(provider, "User.Read", 
+            var request = new WebTokenRequest(provider, "User.Read",
                 Repository.Constants.AccountClientId);
             request.Properties.Add("resource", "https://graph.microsoft.com");
             var result = await WebAuthenticationCoreManager.GetTokenSilentlyAsync(request);
@@ -246,12 +246,12 @@ namespace Contoso.App.ViewModels
 
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                 CoreDispatcherPriority.Normal, async () =>
-            {
-                Name = me.DisplayName;
-                Email = me.Mail;
-                Title = me.JobTitle;
-                Domain = (string)await users[0].GetPropertyAsync(KnownUserProperties.DomainName);
-            });
+                {
+                    Name = me.DisplayName;
+                    Email = me.Mail;
+                    Title = me.JobTitle;
+                    Domain = (string)await users[0].GetPropertyAsync(KnownUserProperties.DomainName);
+                });
         }
 
         /// <summary>
@@ -276,10 +276,10 @@ namespace Contoso.App.ViewModels
                         memoryStream.Position = 0;
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                             CoreDispatcherPriority.Normal, async () =>
-                        {
-                            Photo = new BitmapImage();
-                            await Photo.SetSourceAsync(memoryStream.AsRandomAccessStream());
-                        });
+                            {
+                                Photo = new BitmapImage();
+                                await Photo.SetSourceAsync(memoryStream.AsRandomAccessStream());
+                            });
                     }
                 }
             }

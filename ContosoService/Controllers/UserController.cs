@@ -10,7 +10,6 @@ using Contoso.Repository;
 namespace Contoso.Service.Controllers
 {
     [Route("api/[controller]")]
-    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private IUserRepository _repository;
@@ -39,14 +38,15 @@ namespace Contoso.Service.Controllers
             {
                 return BadRequest();
             }
-            var customer = await _repository.GetAsync(id);
-            if (customer == null)
+
+            var user = await _repository.GetAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(customer);
+                return Ok(user);
             }
         }
 

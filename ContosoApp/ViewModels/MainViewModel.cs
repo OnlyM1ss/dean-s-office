@@ -1,111 +1,82 @@
-//  ---------------------------------------------------------------------------------
-//  Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
-//  The MIT License (MIT)
-// 
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-// 
-//  The above copyright notice and this permission notice shall be included in
-//  all copies or substantial portions of the Software.
-// 
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//  THE SOFTWARE.
-//  ---------------------------------------------------------------------------------
-
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace Contoso.App.ViewModels
 {
-    /// <summary>
-    /// Provides data and commands accessible to the entire app.  
-    /// </summary>
     public class MainViewModel : BindableBase
     {
+        public MainViewModel() => Task.Run(GetDisciplineListAsync);
         /// <summary>
-        /// Creates a new MainViewModel.
+        /// The collection of discipline in the list. 
         /// </summary>
-        public MainViewModel() => Task.Run(GetCustomerListAsync);
+        public ObservableCollection<DisciplineViewModel> Disciplines { get; }
+         = new ObservableCollection<DisciplineViewModel>();
 
+        private DisciplineViewModel _selectedDiscipline;
         /// <summary>
-        /// The collection of customers in the list. 
+        /// Gets or sets the selected discipline, or null if no discipline is selected. 
         /// </summary>
-        public ObservableCollection<CustomerViewModel> Customers { get; }
-            = new ObservableCollection<CustomerViewModel>();
-
-        private CustomerViewModel _selectedCustomer;
-
-        /// <summary>
-        /// Gets or sets the selected customer, or null if no customer is selected. 
-        /// </summary>
-        public CustomerViewModel SelectedCustomer
+        public DisciplineViewModel SelectedDiscipline
         {
-            get => _selectedCustomer;
-            set => Set(ref _selectedCustomer, value);
+            get => _selectedDiscipline;
+            set => Set(ref _selectedDiscipline, value);
         }
 
         private bool _isLoading = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Customers list is currently being updated. 
+        /// Gets or sets a value indicating whether the discipline list is currently being updated. 
         /// </summary>
         public bool IsLoading
         {
-            get => _isLoading; 
+            get => _isLoading;
             set => Set(ref _isLoading, value);
         }
 
         /// <summary>
-        /// Gets the complete list of customers from the database.
+        /// Gets the complete list of discipline from the database.
         /// </summary>
-        public async Task GetCustomerListAsync()
+        public async Task GetDisciplineListAsync()
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(() => IsLoading = true);
 
-            var customers = await App.Repository.Customers.GetAsync();
-            if (customers == null)
+            var disciplines = await App.Repository.Disciplines.GetAsync();
+            if (disciplines == null)
             {
                 return;
             }
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                Customers.Clear();
-                foreach (var c in customers)
+                Disciplines.Clear();
+                foreach (var discipline in disciplines)
                 {
-                    Customers.Add(new CustomerViewModel(c));
+                    Disciplines.Add(new DisciplineViewModel());
                 }
                 IsLoading = false;
             });
         }
 
         /// <summary>
-        /// Saves any modified customers and reloads the customer list from the database.
+        /// Saves any modified customers and reloads the discipline list from the database.
         /// </summary>
         public void Sync()
         {
             Task.Run(async () =>
             {
                 IsLoading = true;
-                foreach (var modifiedCustomer in Customers
-                    .Where(customer => customer.IsModified).Select(customer => customer.Model))
+                foreach (var modifiedCustomer in Disciplines
+                    .Where(discipline => discipline.IsModified).Select(discipline => discipline.Model))
                 {
-                    await App.Repository.Customers.UpsertAsync(modifiedCustomer);
+                    await App.Repository.Disciplines.UpsertAsync(modifiedCustomer);
                 }
 
-                await GetCustomerListAsync();
+                await GetDisciplineListAsync();
                 IsLoading = false;
             });
         }

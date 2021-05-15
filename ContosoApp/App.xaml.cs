@@ -101,15 +101,10 @@ namespace Contoso.App
         /// </summary>
         public static void UseSqlite()
         {
-            string demoDatabasePath = Package.Current.InstalledLocation.Path + @"\Assets\Contoso.db";
             string databasePath = ApplicationData.Current.LocalFolder.Path + @"\Contoso.db";
-            if (!File.Exists(databasePath))
-            {
-                File.Copy(demoDatabasePath, databasePath);
-            }
             var dbOptions = new DbContextOptionsBuilder<ContosoContext>().UseSqlite(
                 "Data Source=" + databasePath);
-            //Repository = new SqlContosoRepository(dbOptions);
+            Repository = new SqlContosoRepository(dbOptions);
         }
 
         /// <summary>
