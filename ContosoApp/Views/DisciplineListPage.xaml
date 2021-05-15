@@ -77,6 +77,10 @@
                 RelativePanel.LeftOf="DisciplineSearchBox"
                 RelativePanel.RightOf="PageTitle">
                 <AppBarButton
+                    Click="{x:Bind ViewModel.LoadDisciplines}"
+                    Icon="Add"
+                    Label="Add" />
+                <AppBarButton
                     x:Name="CommandBarEditButton"
                     Click="EditButton_Click"
                     Icon="Edit"

@@ -12,6 +12,6 @@ namespace Contoso.Repository
         Task<Discipline> GetAsync(string search);
         Task<Discipline> GetAsync(Guid id);
         Task<Discipline> UpsertAsync(Discipline discipline);
-        Task<Discipline> DeleteAsync(Discipline disciplineId);
+        Task<Discipline> DeleteAsync(Guid disciplineId);
     }
 }

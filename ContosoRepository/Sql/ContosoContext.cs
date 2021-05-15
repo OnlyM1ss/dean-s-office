@@ -32,6 +32,9 @@ namespace Contoso.Repository.Sql
     /// </summary>
     public class ContosoContext : DbContext
     {
+        public ContosoContext() : base()
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { 
             optionsBuilder.UseSqlite("Data Source=contoso.db");

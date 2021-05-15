@@ -6,7 +6,7 @@ namespace Contoso.EFCoreCLIHelper
     {
         static void Main(string[] args)
         {
-
+            Console.WriteLine("Hello World!");
         }
     }
 }

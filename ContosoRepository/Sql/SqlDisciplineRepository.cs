@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contoso.Repository.Sql
 {
@@ -16,9 +18,11 @@ namespace Contoso.Repository.Sql
         }
 
 
-        public Task<IEnumerable<Discipline>> GetAsync()
+        public async Task<IEnumerable<Discipline>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _db.Disciplines
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public Task<Discipline> GetAsync(string search)
@@ -26,19 +30,40 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<Discipline> GetAsync(Guid id)
+        public async Task<Discipline> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _db.Disciplines
+                .AsNoTracking()
+                .FirstOrDefaultAsync(disc => disc.Id == id);
         }
 
-        public Task<Discipline> UpsertAsync(Discipline discipline)
+        public async Task<Discipline> UpsertAsync(Discipline discipline)
         {
-            throw new NotImplementedException();
+            var current = await _db.Disciplines.FirstOrDefaultAsync(_discipline => _discipline.Id == discipline.Id);
+            if (null == current)
+            {
+                await _db.Disciplines.AddAsync(discipline);
+            }
+            else
+            {
+                _db.Entry(current).CurrentValues.SetValues(discipline);
+            }
+
+            return discipline;
         }
 
-        public Task<Discipline> DeleteAsync(Discipline disciplineId)
+        public async Task<Discipline> DeleteAsync(Guid disciplineId)
         {
-            throw new NotImplementedException();
+            var current = await _db.Disciplines.FirstOrDefaultAsync(_disc => _disc.Id == disciplineId);
+            if (null != current)
+            {
+                var teachers = await _db.Disciplines.Where(_discipline => _discipline.Id == disciplineId).ToListAsync();
+                _db.Disciplines.RemoveRange(current);
+                _db.Disciplines.Remove(current);
+                await _db.SaveChangesAsync();
+            }
+
+            return current;
         }
     }
 }

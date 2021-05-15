@@ -14,6 +14,14 @@ namespace Contoso.Repository.Sql
             using (var db = new ContosoContext(_dbOptions))
             {
                 db.Database.EnsureCreated();
+                try
+                {
+                    db.Database.Migrate();
+                }
+                catch
+                {
+
+                }
             }
         }
 

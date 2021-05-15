@@ -34,6 +34,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Globalization;
 using Windows.Storage;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Contoso.App
@@ -78,18 +79,17 @@ namespace Contoso.App
             {
                 UseSqlite();
             }
-
             // Prepare the app shell and window content.
-            AppShell shell = Window.Current.Content as AppShell ?? new AppShell();
+        AppShell shell = Window.Current.Content as AppShell ?? new AppShell();
             shell.Language = ApplicationLanguages.Languages[0];
             Window.Current.Content = shell;
 
             if (shell.AppFrame.Content == null)
             {
-                // When the navigation stack isn't restored, navigate to the first page
+                //When the navigation stack isn't restored, navigate to the first page
                 // suppressing the initial entrance animation.
-                //shell.AppFrame.Navigate(typeof(CustomerListPage), null,
-                //    new SuppressNavigationTransitionInfo());
+                shell.AppFrame.Navigate(typeof(DisciplineListPage), null,
+                    new SuppressNavigationTransitionInfo());
             }
 
             Window.Current.Activate();
@@ -101,7 +101,7 @@ namespace Contoso.App
         /// </summary>
         public static void UseSqlite()
         {
-            string databasePath = ApplicationData.Current.LocalFolder.Path + @"\Contoso.db";
+            string databasePath = ApplicationData.Current.LocalFolder.Path + @"\contoso.db";
             var dbOptions = new DbContextOptionsBuilder<ContosoContext>().UseSqlite(
                 "Data Source=" + databasePath);
             Repository = new SqlContosoRepository(dbOptions);

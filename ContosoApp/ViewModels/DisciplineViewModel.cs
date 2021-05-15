@@ -13,14 +13,14 @@ namespace Contoso.App.ViewModels
     public class DisciplineViewModel : BindableBase, IEditableObject
     {
         public DisciplineViewModel(Discipline model = null) => Model = model ?? new Discipline();
-        private Discipline _model;
+        private Discipline _model { get; set; }
 
         public Discipline Model
         {
             get => _model;
             set
             {
-                if (!_model.Equals(value))
+                if (_model != value)
                 {
                     _model = value;
                     Task.Run((async () => await RefreshDisciplineAsync()));
@@ -157,14 +157,13 @@ namespace Contoso.App.ViewModels
         /// Enables edit mode.
         /// </summary>
         public void StartEdit() => IsInEdit = true;
-
         /// <summary>
         /// Reloads all of the customer data.
         /// </summary>
         public async Task RefreshDisciplineAsync()
         {
-            await RefreshDisciplineAsync();
-            Model = await App.Repository.Disciplines.GetAsync(Model.Id);
+            RefreshDiscipline();
+            //Model = await App.Repository.Disciplines.GetAsync(Model.Id);
         }
 
         /// <summary>

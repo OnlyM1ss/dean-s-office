@@ -37,7 +37,7 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<Discipline> DeleteAsync(Discipline disciplineId)
+        public Task<Discipline> DeleteAsync(Guid disciplineId)
         {
             throw new NotImplementedException();
         }

@@ -117,7 +117,6 @@ namespace Contoso.App.ViewModels
                 Disciplines.Clear();
                 MasterDisciplineList.Clear();
             });
-
             var disciplines = await Task.Run(App.Repository.Disciplines.GetAsync);
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
@@ -158,7 +157,7 @@ namespace Contoso.App.ViewModels
         /// Deletes the specified order from the database.
         /// </summary>
         public async Task DeleteDiscipline(Discipline discipline) =>
-            await App.Repository.Disciplines.DeleteAsync(discipline);
+            await App.Repository.Disciplines.DeleteAsync(discipline.Id);
 
         /// <summary>
         /// Stores the order suggestions.
