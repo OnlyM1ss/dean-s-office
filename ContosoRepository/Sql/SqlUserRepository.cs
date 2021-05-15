@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
@@ -15,9 +16,11 @@ namespace Contoso.Repository.Sql
             _db = db;
         }
 
-        public Task<IEnumerable<User>> GetAsync()
+        public async Task<IEnumerable<User>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _db.Users
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public Task<User> GetAsync(string search)
@@ -25,9 +28,11 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<User> GetAsync(Guid id)
+        public async Task<User> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _db.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public Task<User> UpsertAsync(User user)
@@ -35,9 +40,18 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<User> DeleteAsync(Guid userId)
+        public async Task<User> DeleteAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var user = await _db.Users.FirstOrDefaultAsync(_user => _user.Id == userId);
+            if (null != user)
+            {
+                var teachers = await _db.Teachers.Where(_user => _user.Id == userId).ToListAsync();
+                _db.Users.RemoveRange(user);
+                _db.Users.Remove(user);
+                await _db.SaveChangesAsync();
+            }
+
+            return user;
         }
     }
 }

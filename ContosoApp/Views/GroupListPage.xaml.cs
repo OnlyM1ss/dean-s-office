@@ -8,31 +8,32 @@ using Contoso.App.ViewModels;
 using Contoso.Models;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 
-// Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace Contoso.App.Views
 {
     /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
+    /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UserListPage : Page
+    public sealed partial class GroupListPage : Page
     {
-        public UserListPage()
+        public GroupListPage()
         {
             this.InitializeComponent();
         }
         /// <summary>
         /// We use this object to bind the UI to our data. 
         /// </summary>
-        public UserListPageViewModel ViewModel { get; } = new UserListPageViewModel();
+        public GroupListPageViewModel ViewModel { get; } = new GroupListPageViewModel();
         /// <summary>
-        /// Retrieve the list of Users when the user navigates to the page. 
+        /// Retrieve the list of Groups when the user navigates to the page. 
         /// </summary>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (ViewModel.Users.Count < 1)
+            if (ViewModel.Groups.Count < 1)
             {
-                ViewModel.LoadUsers();
+                ViewModel.LoadGroups();
             }
         }
 
@@ -40,25 +41,25 @@ namespace Contoso.App.Views
         /// Opens the order in the order details page for editing. 
         /// </summary>
         private void EditButton_Click(object sender, RoutedEventArgs e) =>
-            Frame.Navigate(typeof(UserDetailPage), ViewModel.SelectedUser.Id);
+            Frame.Navigate(typeof(GroupDetailPage), ViewModel.SelectedGroup.Id);
 
         /// <summary>
         /// Deletes the currently selected order.
         /// </summary>
-        private async void DeleteUser_Click(object sender, RoutedEventArgs e)
+        private async void DeleteGroup_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var deletedeUserr = ViewModel.SelectedUser;
-                await ViewModel.DeleteUser(deletedeUserr);
+                var deletedeGroupr = ViewModel.SelectedGroup;
+                await ViewModel.DeleteGroup(deletedeGroupr);
             }
-            catch (/*UserDeletionException ex*/ Exception ex)
+            catch (/*GroupDeletionException ex*/ Exception ex)
             {
                 var dialog = new ContentDialog()
                 {
-                    Title = "Unable to delete user",
+                    Title = "Unable to delete group",
                     Content = $"There was an error when we tried to delete " +
-                        $"invoice #{ViewModel.SelectedUser.Id}:\n{ex.Message}",
+                        $"invoice #{ViewModel.SelectedGroup.Id}:\n{ex.Message}",
                     PrimaryButtonText = "OK"
                 };
                 await dialog.ShowAsync();
@@ -72,24 +73,24 @@ namespace Contoso.App.Views
         {
             //if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             //{
-            //    (sender as CommandBar).DefaultLabelUser = CommandBarDefaultLabelUser.Bottom;
+            //    (sender as CommandBar).DefaultLabelGroup = CommandBarDefaultLabelGroup.Bottom;
             //}
             //else
             //{
-            //    (sender as CommandBar).DefaultLabelUser = CommandBarDefaultLabelUser.Right;
+            //    (sender as CommandBar).DefaultLabelGroup = CommandBarDefaultLabelGroup.Right;
             //}
         }
 
         /// <summary>
         /// Initializes the AutoSuggestBox portion of the search box.
         /// </summary>
-        private void UserSearchBox_Loaded(object sender, RoutedEventArgs e)
+        private void GroupSearchBox_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is UserControls.CollapsibleSearchBox searchBox)
             {
-                searchBox.AutoSuggestBox.QuerySubmitted += UserSearch_QuerySubmitted;
-                searchBox.AutoSuggestBox.TextChanged += UserSearch_TextChanged;
-                searchBox.AutoSuggestBox.PlaceholderText = "Search users...";
+                searchBox.AutoSuggestBox.QuerySubmitted += GroupSearch_QuerySubmitted;
+                searchBox.AutoSuggestBox.TextChanged += GroupSearch_TextChanged;
+                searchBox.AutoSuggestBox.PlaceholderText = "Search groups...";
                 searchBox.AutoSuggestBox.ItemTemplate = (DataTemplate)Resources["SearchSuggestionItemTemplate"];
                 searchBox.AutoSuggestBox.ItemContainerStyle = (Style)Resources["SearchSuggestionItemStyle"];
             }
@@ -97,14 +98,14 @@ namespace Contoso.App.Views
         /// <summary>
         /// Searchs the list of orders.
         /// </summary>
-        private void UserSearch_QuerySubmitted(AutoSuggestBox sender,
+        private void GroupSearch_QuerySubmitted(AutoSuggestBox sender,
             AutoSuggestBoxQuerySubmittedEventArgs args) =>
-            ViewModel.QueryUsers(args.QueryText);
+            ViewModel.QueryGroups(args.QueryText);
 
         /// <summary>
         /// Updates the suggestions for the AutoSuggestBox as the user types. 
         /// </summary>
-        private void UserSearch_TextChanged(AutoSuggestBox sender,
+        private void GroupSearch_TextChanged(AutoSuggestBox sender,
             AutoSuggestBoxTextChangedEventArgs args)
         {
             // We only want to get results when it was a user typing, 
@@ -116,11 +117,11 @@ namespace Contoso.App.Views
             }
         }
         /// <summary>
-        /// Searchs the list of user.
+        /// Searchs the list of group.
         /// </summary>
         private void OrderSearch_QuerySubmitted(AutoSuggestBox sender,
             AutoSuggestBoxQuerySubmittedEventArgs args) =>
-                ViewModel.QueryUsers(args.QueryText);
+                ViewModel.QueryGroups(args.QueryText);
 
         /// <summary>
         /// Updates the suggestions for the AutoSuggestBox as the user types. 
@@ -138,37 +139,37 @@ namespace Contoso.App.Views
         }
 
         /// <summary>
-        /// Navigates to the User detail page when the user
-        /// double-clicks an User. 
+        /// Navigates to the Group detail page when the user
+        /// double-clicks an Group. 
         /// </summary>
         private void DataGrid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) =>
-            Frame.Navigate(typeof(UserDetailPage), ViewModel.SelectedUser.Id);
+            Frame.Navigate(typeof(GroupDetailPage), ViewModel.SelectedGroup.Id);
 
         // Navigates to the details page for the selected customer when the user presses SPACE.
         private void DataGrid_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Space)
             {
-                Frame.Navigate(typeof(UserDetailPage), ViewModel.SelectedUser.Id);
+                Frame.Navigate(typeof(GroupDetailPage), ViewModel.SelectedGroup.Id);
             }
         }
 
         /// <summary>
-        /// Selects the tapped user. 
+        /// Selects the tapped group. 
         /// </summary>
         private void DataGrid_RightTapped(object sender, RightTappedRoutedEventArgs e) =>
-            ViewModel.SelectedUser = (e.OriginalSource as FrameworkElement).DataContext as User;
+            ViewModel.SelectedGroup = (e.OriginalSource as FrameworkElement).DataContext as Group;
 
         /// <summary>
-        /// Navigates to the user details page.
+        /// Navigates to the group details page.
         /// </summary>
         private void MenuFlyoutViewDetails_Click(object sender, RoutedEventArgs e) =>
-            Frame.Navigate(typeof(UserDetailPage), ViewModel.SelectedUser.Id, new DrillInNavigationTransitionInfo());
+            Frame.Navigate(typeof(GroupDetailPage), ViewModel.SelectedGroup.Id, new DrillInNavigationTransitionInfo());
 
         /// <summary>
         /// Sorts the data in the DataGrid.
         /// </summary>
         private void DataGrid_Sorting(object sender, DataGridColumnEventArgs e) =>
-            (sender as DataGrid).Sort(e.Column, ViewModel.Users.Sort);
+            (sender as DataGrid).Sort(e.Column, ViewModel.Groups.Sort);
     }
 }

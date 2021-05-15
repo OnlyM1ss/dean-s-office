@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Contoso.App.Views.PositionListPage"
+    x:Class="Contoso.App.Views.GroupListPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -31,7 +31,7 @@
 
         <DataTemplate
             x:Key="SearchSuggestionItemTemplate"
-            x:DataType="models:Position">
+            x:DataType="models:Group">
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -47,12 +47,12 @@
                     Margin="0,0,20,0"
                     Padding="0"
                     HorizontalAlignment="Stretch"
-                    Text="{x:Bind Rating}" />
+                    Text="{x:Bind Faculty}" />
                 <TextBlock
                     Grid.Column="1"
                     Margin="0,0,20,0"
                     HorizontalAlignment="Stretch"
-                    Text="{x:Bind Name}" />
+                    Text="{x:Bind Count}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -63,10 +63,10 @@
             <TextBlock
                 x:Name="PageTitle"
                 Style="{StaticResource PageTitleTextBlockStyle}"
-                Text="Positions" />
+                Text="Groups" />
 
             <!--
-                On Windows 10, version 1607 or later, set DefaultLabelPosition to Right in code.
+                On Windows 10, version 1607 or later, set DefaultLabelGroup to Right in code.
                 See CommandBar_Loaded event handler.
             -->
             <CommandBar
@@ -74,41 +74,41 @@
                 HorizontalAlignment="Stretch"
                 Background="Transparent"
                 Loaded="CommandBar_Loaded"
-                RelativePanel.LeftOf="PositionSearchBox"
+                RelativePanel.LeftOf="GroupSearchBox"
                 RelativePanel.RightOf="PageTitle">
                 <AppBarButton
-                    Click="{x:Bind ViewModel.LoadPositions}"
+                    Click="{x:Bind ViewModel.LoadGroups}"
                     Icon="Add"
                     Label="Add" />
                 <AppBarButton
                     x:Name="CommandBarEditButton"
                     Click="EditButton_Click"
                     Icon="Edit"
-                    IsEnabled="{x:Bind vm:Converters.IsNotNull(ViewModel.SelectedPosition), Mode=OneWay}"
+                    IsEnabled="{x:Bind vm:Converters.IsNotNull(ViewModel.SelectedGroup), Mode=OneWay}"
                     Label="Edit" />
                 <AppBarButton
                     x:Name="CommandBarDeleteButton"
-                    Click="DeletePosition_Click"
+                    Click="DeleteGroup_Click"
                     Icon="Delete"
-                    IsEnabled="{x:Bind vm:Converters.IsNotNull(ViewModel.SelectedPosition), Mode=OneWay}"
+                    IsEnabled="{x:Bind vm:Converters.IsNotNull(ViewModel.SelectedGroup), Mode=OneWay}"
                     Label="Delete" />
                 <AppBarButton
-                    Click="{x:Bind ViewModel.LoadPositions}"
+                    Click="{x:Bind ViewModel.LoadGroups}"
                     Icon="Refresh"
                     Label="Refresh" />
             </CommandBar>
             <uc:CollapsibleSearchBox
-                x:Name="PositionSearchBox"
+                x:Name="GroupSearchBox"
                 Width="240"
                 Margin="12,8,12,0"
                 CollapseWidth="{StaticResource MediumWindowSnapPoint}"
-                Loaded="PositionSearchBox_Loaded"
+                Loaded="GroupSearchBox_Loaded"
                 RelativePanel.AlignRightWithPanel="True" />
 
             <SplitView
                 x:Name="listSplitView"
                 DisplayMode="Inline"
-                IsPaneOpen="{x:Bind vm:Converters.IsNotNull(ViewModel.SelectedPosition), Mode=OneWay}"
+                IsPaneOpen="{x:Bind vm:Converters.IsNotNull(ViewModel.SelectedGroup), Mode=OneWay}"
                 OpenPaneLength="260"
                 PanePlacement="Right"
                 RelativePanel.AlignBottomWithPanel="True"
@@ -119,9 +119,9 @@
                 <!--  Displays details about the currently selected order.  -->
                 <SplitView.Pane>
                     <StackPanel
-                        x:Name="PositionInfoPanel"
+                        x:Name="GroupInfoPanel"
                         Margin="24,28,24,0"
-                        Visibility="{x:Bind vm:Converters.CollapsedIfNull(ViewModel.SelectedPosition), Mode=OneWay}">
+                        Visibility="{x:Bind vm:Converters.CollapsedIfNull(ViewModel.SelectedGroup), Mode=OneWay}">
                         <StackPanel.Resources>
                             <Style TargetType="TextBox">
                                 <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -137,16 +137,16 @@
                                 FontWeight="SemiBold"
                                 Text="Invoice #" />
                         </StackPanel>
-                        <TextBlock Text="{x:Bind ViewModel.SelectedPositionGrandTotalFormatted, Mode=OneWay}" />
+                        <TextBlock Text="{x:Bind ViewModel.SelectedGroupGrandTotalFormatted, Mode=OneWay}" />
 
                         <StackPanel Margin="0,20,0,20">
                             <TextBlock
                                 FontWeight="SemiBold"
                                 IsTextSelectionEnabled="True"
-                                Text="{x:Bind ViewModel.SelectedPosition.Name, Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.SelectedGroup.Faculty, Mode=OneWay}" />
                             <TextBlock
                                 IsTextSelectionEnabled="True"
-                                Text="{x:Bind ViewModel.SelectedPosition.Rating, Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.SelectedGroup.Count, Mode=OneWay}" />
                         </StackPanel>
 
                     </StackPanel>
@@ -161,8 +161,8 @@
                             IsReadOnly="True"
                             AutoGenerateColumns="False"
                             Margin="0,10,0,0"
-                            ItemsSource="{x:Bind ViewModel.Positions, Mode=OneWay}"
-                            SelectedItem="{x:Bind ViewModel.SelectedPosition, Mode=TwoWay}"
+                            ItemsSource="{x:Bind ViewModel.Groups, Mode=OneWay}"
+                            SelectedItem="{x:Bind ViewModel.SelectedGroup, Mode=TwoWay}"
                             KeyDown="DataGrid_KeyDown"
                             Sorting="DataGrid_Sorting"
                             RightTapped="DataGrid_RightTapped"
@@ -211,7 +211,7 @@
                         <Setter Target="mainCommandBar.(RelativePanel.AlignBottomWithPanel)" Value="True" />
                         <Setter Target="mainCommandBar.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="mainCommandBar.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="PositionSearchBox.Width" Value="300" />
+                        <Setter Target="GroupSearchBox.Width" Value="300" />
                         <Setter Target="listSplitView.IsPaneOpen" Value="False" />
                     </VisualState.Setters>
                 </VisualState>

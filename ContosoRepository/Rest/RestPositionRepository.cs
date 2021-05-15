@@ -30,7 +30,7 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<Position> UpsertAsync(User position)
+        public Task<Position> UpsertAsync(Position position)
         {
             throw new NotImplementedException();
         }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contoso.Repository.Sql
 {
@@ -15,9 +17,11 @@ namespace Contoso.Repository.Sql
             _db = db;
         }
 
-        public Task<IEnumerable<Position>> GetAsync()
+        public async Task<IEnumerable<Position>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _db.Positions
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public Task<Position> GetAsync(string search)
@@ -25,19 +29,40 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<Position> GetAsync(Guid id)
+        public async Task<Position> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _db.Positions
+                .AsNoTracking()
+                .FirstOrDefaultAsync(pos => pos.Id == id);
         }
 
-        public Task<Position> UpsertAsync(User position)
+        public async Task<Position> UpsertAsync(Position position)
         {
-            throw new NotImplementedException();
+            var current = await _db.Positions.FirstOrDefaultAsync(_pos => _pos.Id == position.Id);
+            if (null == current)
+            {
+                await _db.Positions.AddAsync(position);
+            }
+            else
+            {
+                _db.Entry(current).CurrentValues.SetValues(position);
+            }
+
+            return position;
         }
 
-        public Task<Position> DeleteAsync(Guid positionId)
+        public async Task<Position> DeleteAsync(Guid positionId)
         {
-            throw new NotImplementedException();
+            var current = await _db.Positions.FirstOrDefaultAsync(_pos => _pos.Id == positionId);
+            if (null != current)
+            {
+                var teachers = await _db.Disciplines.Where(_pos => _pos.Id == positionId).ToListAsync();
+                _db.Positions.RemoveRange(current);
+                _db.Positions.Remove(current);
+                await _db.SaveChangesAsync();
+            }
+
+            return current;
         }
     }
 }

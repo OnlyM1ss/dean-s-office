@@ -117,14 +117,18 @@ namespace Contoso.App
             Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
             var label = args.InvokedItem as string;
-            //var pageType =
-            //args.IsSettingsInvoked ? typeof(SettingsPage) :
-            //label == CustomerListLabel ? typeof(CustomerListPage) :
-            // label == OrderListLabel ? typeof(OrderListPage) : null;
-            //if (pageType != null && pageType != AppFrame.CurrentSourcePageType)
-            //{
-            //    AppFrame.Navigate(pageType);
-            //}
+            var pageType =
+            args.IsSettingsInvoked ? typeof(SettingsPage) :
+            label == DisciplineListLabel ? typeof(DisciplineListPage) :
+             label == PositionListLabel ? typeof(PositionListPage) :
+            label == TeacherListLabel ? typeof(TeacherListPage):
+            label == UserListLabel ? typeof(UserListPage) :
+            label == GroupListLabel ? typeof(GroupListPage) :
+            null;
+            if (pageType != null && pageType != AppFrame.CurrentSourcePageType)
+            {
+                AppFrame.Navigate(pageType);
+            }
         }
 
         /// <summary>
@@ -142,6 +146,10 @@ namespace Contoso.App
                 else if (e.SourcePageType == typeof(DisciplineListPage))
                 {
                     NavView.SelectedItem = DisciplineListMenuItem;
+                }
+                else if (e.SourcePageType == typeof(GroupListPage))
+                {
+                    NavView.SelectedItem = GroupListMenuItem;
                 }
                 else if (e.SourcePageType == typeof(TeacherListPage))
                 {

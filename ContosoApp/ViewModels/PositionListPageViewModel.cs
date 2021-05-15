@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +9,22 @@ using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace Contoso.App.ViewModels
 {
-    public class UserListPageViewModel : BindableBase
+    public class PositionListPageViewModel : BindableBase
     {
         /// <summary>
         /// Initializes a new instance of the OrderListPageViewModel class.
         /// </summary>
-        public UserListPageViewModel() => IsLoading = false;
+        public PositionListPageViewModel() => IsLoading = false;
 
         /// <summary>
         /// Gets the unfiltered collection of all orders. 
         /// </summary>
-        private List<User> MasterUserList { get; } = new List<User>();
+        private List<Position> MasterPositionList { get; } = new List<Position>();
 
         /// <summary>
         /// Gets the orders to display.
         /// </summary>
-        public ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
+        public ObservableCollection<Position> Positions { get; private set; } = new ObservableCollection<Position>();
 
         private bool _isLoading;
 
@@ -38,67 +37,67 @@ namespace Contoso.App.ViewModels
             set => Set(ref _isLoading, value);
         }
 
-        private User _selectedUser;
+        private Position _selectedPosition;
 
         /// <summary>
         /// Gets or sets the selected order.
         /// </summary>
-        public User SelectedUser
+        public Position SelectedPosition
         {
-            get => _selectedUser;
+            get => _selectedPosition;
             set
             {
-                if (Set(ref _selectedUser, value))
+                if (Set(ref _selectedPosition, value))
                 {
                     // Clear out the existing customer.
-                    SelectedUser = null;
-                    if (_selectedUser != null)
+                    SelectedPosition = null;
+                    if (_selectedPosition != null)
                     {
-                        Task.Run(() => LoadCustomer(_selectedUser.Id));
+                        Task.Run(() => LoadCustomer(_selectedPosition.Id));
                     }
-
-                    OnPropertyChanged(nameof(SelectedUserGrandTotalFormatted));
+                    OnPropertyChanged(nameof(SelectedPositionGrandTotalFormatted));
                 }
             }
         }
-
-        public string UserName { get; set; }
-
+        public string PositionName { get; set; }
         /// <summary>
         /// Gets a formatted version of the selected order's grand total value.
         /// </summary>
-        public string SelectedUserGrandTotalFormatted;
+        public string SelectedPositionGrandTotalFormatted;
 
         /// <summary>
         /// Loads the specified customer and sets the
         /// SelectedCustomer property.
         /// </summary>
         /// <param name="customerId">The customer to load.</param>
-        private async void LoadCustomer(Guid userId)
+        private async void LoadCustomer(Guid PositionId)
         {
-            var user = await App.Repository.Users.GetAsync(userId);
-            await DispatcherHelper.ExecuteOnUIThreadAsync(() => { SelectedUser = user; });
+            var Position = await App.Repository.Positions.GetAsync(PositionId);
+            await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+            {
+                SelectedPosition = Position;
+            });
         }
 
         /// <summary>
         /// Retrieves orders from the data source.
         /// </summary>
-        public async void LoadUsers()
+        public async void LoadPositions()
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
                 IsLoading = true;
-                Users.Clear();
-                MasterUserList.Clear();
+                Positions.Clear();
+                MasterPositionList.Clear();
             });
-            var users = await Task.Run(App.Repository.Users.GetAsync);
+            var positions = await Task.Run(App.Repository.Positions.GetAsync);
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                foreach (var user in users)
+                foreach (var position in Positions)
                 {
-                    Users.Add(user);
-                    MasterUserList.Add(user);
+                    Positions.Add(position);
+                    MasterPositionList.Add(position);
                 }
 
                 IsLoading = false;
@@ -108,19 +107,19 @@ namespace Contoso.App.ViewModels
         /// <summary>
         /// Submits a query to the data source.
         /// </summary>
-        public async void QueryUsers(string query)
+        public async void QueryPositions(string query)
         {
             IsLoading = true;
-            Users.Clear();
+            Positions.Clear();
             if (!string.IsNullOrEmpty(query))
             {
-                var results = await App.Repository.Users.GetAsync(query);
+                var results = await App.Repository.Positions.GetAsync(query);
                 await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
                     //TODO: change type in repos 
-                    //foreach (User user in results)
+                    //foreach (Position Position in results)
                     //{
-                    //    Users.Add(user);
+                    //    Positions.Add(Position);
                     //}
                     IsLoading = false;
                 });
@@ -130,35 +129,34 @@ namespace Contoso.App.ViewModels
         /// <summary>
         /// Deletes the specified order from the database.
         /// </summary>
-        public async Task DeleteUser(User user) =>
-            await App.Repository.Users.DeleteAsync(user.Id);
+        public async Task DeletePosition(Position Position) =>
+            await App.Repository.Positions.DeleteAsync(Position.Id);
 
         /// <summary>
         /// Stores the order suggestions.
         /// </summary>
-        public ObservableCollection<User> UserSuggestions { get; } = new ObservableCollection<User>();
+        public ObservableCollection<Position> PositionSuggestions { get; } = new ObservableCollection<Position>();
 
         /// <summary>
         /// Queries the database and updates the list of new order suggestions.
         /// </summary>
         public void UpdateOrderSuggestions(string queryText)
         {
-            UserSuggestions.Clear();
+            PositionSuggestions.Clear();
             if (!string.IsNullOrEmpty(queryText))
             {
-                string[] parameters = queryText.Split(new char[] {' '},
+                string[] parameters = queryText.Split(new char[] { ' ' },
                     StringSplitOptions.RemoveEmptyEntries);
 
-                var resultList = MasterUserList
-                    .Where(user => parameters
+                var resultList = MasterPositionList
+                    .Where(Position => parameters
                         .Any(parameter =>
-                            user.FirstName.StartsWith(parameter) ||
-                            user.Login.StartsWith(parameter) ||
-                            user.LastName.StartsWith(parameter)));
+                            Position.Name.StartsWith(parameter) ||
+                            Position.Rating.Equals(int.Parse(parameter))));
 
-                foreach (User user in resultList)
+                foreach (Position Position in resultList)
                 {
-                    UserSuggestions.Add(user);
+                    PositionSuggestions.Add(Position);
                 }
             }
         }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Contoso.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contoso.Repository.Sql
 {
@@ -15,9 +17,11 @@ namespace Contoso.Repository.Sql
             _db = db;
         }
 
-        public Task<IEnumerable<Group>> GetAsync()
+        public async Task<IEnumerable<Group>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _db.Groups
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public Task<Group> GetAsync(string search)
@@ -25,19 +29,40 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<Group> GetAsync(Guid id)
+        public async Task<Group> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _db.Groups
+                .AsNoTracking()
+                .FirstOrDefaultAsync(group => group.Id == id);
         }
 
-        public Task<Group> UpsertAsync(Group @group)
+        public async Task<Group> UpsertAsync(Group group)
         {
-            throw new NotImplementedException();
+            var current = await _db.Groups.FirstOrDefaultAsync(_group => _group.Id == group.Id);
+            if (null == current)
+            {
+                await _db.Groups.AddAsync(group);
+            }
+            else
+            {
+                _db.Entry(current).CurrentValues.SetValues(group);
+            }
+
+            return group;
         }
 
-        public Task<Group> DeleteAsync(Guid groupId)
+        public async Task<Group> DeleteAsync(Guid groupId)
         {
-            throw new NotImplementedException();
+            var current = await _db.Groups.FirstOrDefaultAsync(_group => _group.Id == groupId);
+            if (null != current)
+            {
+                var teachers = await _db.Groups.Where(_group => _group.Id == groupId).ToListAsync();
+                _db.Groups.RemoveRange(current);
+                _db.Groups.Remove(current);
+                await _db.SaveChangesAsync();
+            }
+
+            return current;
         }
     }
 }

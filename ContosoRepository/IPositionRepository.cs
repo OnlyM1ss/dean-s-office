@@ -11,7 +11,7 @@ namespace Contoso.Repository
         Task<IEnumerable<Position>> GetAsync();
         Task<Position> GetAsync(string search);
         Task<Position> GetAsync(Guid id);
-        Task<Position> UpsertAsync(User position);
+        Task<Position> UpsertAsync(Position position);
         Task<Position> DeleteAsync(Guid positionId);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +9,22 @@ using Microsoft.Toolkit.Uwp.Helpers;
 
 namespace Contoso.App.ViewModels
 {
-    public class UserListPageViewModel : BindableBase
+    public class GroupListPageViewModel : BindableBase
     {
         /// <summary>
         /// Initializes a new instance of the OrderListPageViewModel class.
         /// </summary>
-        public UserListPageViewModel() => IsLoading = false;
+        public GroupListPageViewModel() => IsLoading = false;
 
         /// <summary>
         /// Gets the unfiltered collection of all orders. 
         /// </summary>
-        private List<User> MasterUserList { get; } = new List<User>();
+        private List<Group> MasterGroupList { get; } = new List<Group>();
 
         /// <summary>
         /// Gets the orders to display.
         /// </summary>
-        public ObservableCollection<User> Users { get; private set; } = new ObservableCollection<User>();
+        public ObservableCollection<Group> Groups { get; private set; } = new ObservableCollection<Group>();
 
         private bool _isLoading;
 
@@ -38,67 +37,67 @@ namespace Contoso.App.ViewModels
             set => Set(ref _isLoading, value);
         }
 
-        private User _selectedUser;
+        private Group _selectedGroup;
 
         /// <summary>
         /// Gets or sets the selected order.
         /// </summary>
-        public User SelectedUser
+        public Group SelectedGroup
         {
-            get => _selectedUser;
+            get => _selectedGroup;
             set
             {
-                if (Set(ref _selectedUser, value))
+                if (Set(ref _selectedGroup, value))
                 {
                     // Clear out the existing customer.
-                    SelectedUser = null;
-                    if (_selectedUser != null)
+                    SelectedGroup = null;
+                    if (_selectedGroup != null)
                     {
-                        Task.Run(() => LoadCustomer(_selectedUser.Id));
+                        Task.Run(() => LoadCustomer(_selectedGroup.Id));
                     }
-
-                    OnPropertyChanged(nameof(SelectedUserGrandTotalFormatted));
+                    OnPropertyChanged(nameof(SelectedGroupGrandTotalFormatted));
                 }
             }
         }
-
-        public string UserName { get; set; }
-
+        public string GroupName { get; set; }
         /// <summary>
         /// Gets a formatted version of the selected order's grand total value.
         /// </summary>
-        public string SelectedUserGrandTotalFormatted;
+        public string SelectedGroupGrandTotalFormatted;
 
         /// <summary>
         /// Loads the specified customer and sets the
         /// SelectedCustomer property.
         /// </summary>
         /// <param name="customerId">The customer to load.</param>
-        private async void LoadCustomer(Guid userId)
+        private async void LoadCustomer(Guid GroupId)
         {
-            var user = await App.Repository.Users.GetAsync(userId);
-            await DispatcherHelper.ExecuteOnUIThreadAsync(() => { SelectedUser = user; });
+            var Group = await App.Repository.Groups.GetAsync(GroupId);
+            await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+            {
+                SelectedGroup = Group;
+            });
         }
 
         /// <summary>
         /// Retrieves orders from the data source.
         /// </summary>
-        public async void LoadUsers()
+        public async void LoadGroups()
         {
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
                 IsLoading = true;
-                Users.Clear();
-                MasterUserList.Clear();
+                Groups.Clear();
+                MasterGroupList.Clear();
             });
-            var users = await Task.Run(App.Repository.Users.GetAsync);
+            var groups = await Task.Run(App.Repository.Groups.GetAsync);
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                foreach (var user in users)
+                foreach (var group in Groups)
                 {
-                    Users.Add(user);
-                    MasterUserList.Add(user);
+                    Groups.Add(group);
+                    MasterGroupList.Add(group);
                 }
 
                 IsLoading = false;
@@ -108,19 +107,19 @@ namespace Contoso.App.ViewModels
         /// <summary>
         /// Submits a query to the data source.
         /// </summary>
-        public async void QueryUsers(string query)
+        public async void QueryGroups(string query)
         {
             IsLoading = true;
-            Users.Clear();
+            Groups.Clear();
             if (!string.IsNullOrEmpty(query))
             {
-                var results = await App.Repository.Users.GetAsync(query);
+                var results = await App.Repository.Groups.GetAsync(query);
                 await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
                 {
                     //TODO: change type in repos 
-                    //foreach (User user in results)
+                    //foreach (Group Group in results)
                     //{
-                    //    Users.Add(user);
+                    //    Groups.Add(Group);
                     //}
                     IsLoading = false;
                 });
@@ -130,37 +129,37 @@ namespace Contoso.App.ViewModels
         /// <summary>
         /// Deletes the specified order from the database.
         /// </summary>
-        public async Task DeleteUser(User user) =>
-            await App.Repository.Users.DeleteAsync(user.Id);
+        public async Task DeleteGroup(Group Group) =>
+            await App.Repository.Groups.DeleteAsync(Group.Id);
 
         /// <summary>
         /// Stores the order suggestions.
         /// </summary>
-        public ObservableCollection<User> UserSuggestions { get; } = new ObservableCollection<User>();
+        public ObservableCollection<Group> GroupSuggestions { get; } = new ObservableCollection<Group>();
 
         /// <summary>
         /// Queries the database and updates the list of new order suggestions.
         /// </summary>
         public void UpdateOrderSuggestions(string queryText)
         {
-            UserSuggestions.Clear();
+            GroupSuggestions.Clear();
             if (!string.IsNullOrEmpty(queryText))
             {
-                string[] parameters = queryText.Split(new char[] {' '},
+                string[] parameters = queryText.Split(new char[] { ' ' },
                     StringSplitOptions.RemoveEmptyEntries);
 
-                var resultList = MasterUserList
-                    .Where(user => parameters
+                var resultList = MasterGroupList
+                    .Where(Group => parameters
                         .Any(parameter =>
-                            user.FirstName.StartsWith(parameter) ||
-                            user.Login.StartsWith(parameter) ||
-                            user.LastName.StartsWith(parameter)));
+                            Group.Faculty.StartsWith(parameter) ||
+                            Group.Count.Equals(int.Parse(parameter))));
 
-                foreach (User user in resultList)
+                foreach (Group Group in resultList)
                 {
-                    UserSuggestions.Add(user);
+                    GroupSuggestions.Add(Group);
                 }
             }
         }
     }
+
 }

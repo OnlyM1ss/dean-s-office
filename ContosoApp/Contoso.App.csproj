@@ -110,10 +110,28 @@
     <Compile Include="ViewModels\BindableBase.cs" />
     <Compile Include="ViewModels\DisciplineListPageViewModel.cs" />
     <Compile Include="ViewModels\DisciplineViewModel.cs" />
+    <Compile Include="ViewModels\GroupListPageViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\PositionListPageViewModel.cs" />
+    <Compile Include="ViewModels\TeacherListPageViewModel.cs" />
     <Compile Include="ViewModels\UserListPageViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\DataGridHelper.cs" />
+    <Compile Include="Views\GroupDetailPage.xaml.cs">
+      <DependentUpon>GroupDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GroupListPage.xaml.cs">
+      <DependentUpon>GroupListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TeacherDetailPage.xaml.cs">
+      <DependentUpon>TeacherDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserDetailPage.xaml.cs">
+      <DependentUpon>UserDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PositionDetailPage.xaml.cs">
+      <DependentUpon>PositionDetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DisciplineDetailPage.xaml.cs">
       <DependentUpon>DisciplineDetailPage.xaml</DependentUpon>
     </Compile>
@@ -215,6 +233,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\CollapsibleSearchBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GroupDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GroupListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TeacherDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PositionDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

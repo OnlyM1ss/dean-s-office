@@ -71,7 +71,8 @@ namespace Contoso.App
             {
                 switch (dataSource.ToString())
                 {
-                    case "Rest": UseRest(); break;
+                    //TODO UseRest here
+                    case "Rest": UseSqlite(); break;
                     default: UseSqlite(); break; 
                 }
             }

@@ -7,21 +7,8 @@ using System.Threading.Tasks;
 
 namespace Contoso.App.ViewModels
 {
-    public class UserViewModel : BindableBase,IEditableObject
+    public class UserViewModel : BindableBase
     {
-        public void BeginEdit()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CancelEdit()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EndEdit()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
