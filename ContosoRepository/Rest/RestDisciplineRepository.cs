@@ -22,7 +22,7 @@ namespace Contoso.Repository.Sql
             throw new NotImplementedException();
         }
 
-        public Task<Discipline> GetAsync(string search)
+        public Task<IEnumerable<Discipline>> GetAsync(string search)
         {
             throw new NotImplementedException();
         }

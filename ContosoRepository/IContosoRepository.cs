@@ -23,6 +23,7 @@
 //  ---------------------------------------------------------------------------------
 
 using Contoso.Models;
+using Contoso.Repository.Sql;
 
 namespace Contoso.Repository
 {

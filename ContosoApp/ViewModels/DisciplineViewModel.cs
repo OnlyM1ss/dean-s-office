@@ -82,21 +82,21 @@ namespace Contoso.App.ViewModels
             set => Set(ref _isLoading, value);
         }
 
-        private bool _isNewCustomer;
+        private bool _isNewDiscipline;
 
         /// <summary>
-        /// Gets or sets a value that indicates whether this is a new customer.
+        /// Gets or sets a value that indicates whether this is a new discipline.
         /// </summary>
-        public bool IsNewCustomer
+        public bool IsNewDiscipline
         {
-            get => _isNewCustomer;
-            set => Set(ref _isNewCustomer, value);
+            get => _isNewDiscipline;
+            set => Set(ref _isNewDiscipline, value);
         }
 
         private bool _isInEdit = false;
 
         /// <summary>
-        /// Called when a bound DataGrid control causes the customer to enter edit mode.
+        /// Called when a bound DataGrid control causes the discipline to enter edit mode.
         /// </summary>
         public bool IsInEdit
         {
@@ -105,15 +105,15 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Saves customer data that has been edited.
+        /// Saves discipline data that has been edited.
         /// </summary>
         public async Task SaveAsync()
         {
             IsInEdit = false;
             IsModified = false;
-            if (IsNewCustomer)
+            if (IsNewDiscipline)
             {
-                IsNewCustomer = false;
+                IsNewDiscipline = false;
                 App.ViewModel.Disciplines.Add(this);
             }
 
@@ -121,18 +121,18 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Raised when the user cancels the changes they've made to the customer data.
+        /// Raised when the user cancels the changes they've made to the discipline data.
         /// </summary>
-        public event EventHandler AddNewCustomerCanceled;
+        public event EventHandler AddNewDisciplineCanceled;
 
         /// <summary>
         /// Cancels any in progress edits.
         /// </summary>
         public async Task CancelEditsAsync()
         {
-            if (IsNewCustomer)
+            if (IsNewDiscipline)
             {
-                AddNewCustomerCanceled?.Invoke(this, EventArgs.Empty);
+                AddNewDisciplineCanceled?.Invoke(this, EventArgs.Empty);
             }
             else
             {
@@ -158,7 +158,7 @@ namespace Contoso.App.ViewModels
         /// </summary>
         public void StartEdit() => IsInEdit = true;
         /// <summary>
-        /// Reloads all of the customer data.
+        /// Reloads all of the discipline data.
         /// </summary>
         public async Task RefreshDisciplineAsync()
         {
@@ -167,12 +167,12 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Resets the customer detail fields to the current values.
+        /// Resets the discipline detail fields to the current values.
         /// </summary>
         public void RefreshDiscipline() => Task.Run(LoadDisciplineAsync);
 
         /// <summary>
-        /// Loads the discipline data for the customer.
+        /// Loads the discipline data for the discipline.
         /// </summary>
         public async Task LoadDisciplineAsync()
         {
@@ -196,7 +196,7 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Called when a bound DataGrid control causes the customer to enter edit mode.
+        /// Called when a bound DataGrid control causes the discipline to enter edit mode.
         /// </summary>
         public void BeginEdit()
         {
@@ -204,12 +204,12 @@ namespace Contoso.App.ViewModels
         }
 
         /// <summary>
-        /// Called when a bound DataGrid control cancels the edits that have been made to a customer.
+        /// Called when a bound DataGrid control cancels the edits that have been made to a discipline.
         /// </summary>
         public async void CancelEdit() => await CancelEditsAsync();
 
         /// <summary>
-        /// Called when a bound DataGrid control commits the edits that have been made to a customer.
+        /// Called when a bound DataGrid control commits the edits that have been made to a discipline.
         /// </summary>
         public async void EndEdit() => await SaveAsync();
     }

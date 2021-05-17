@@ -77,10 +77,10 @@ namespace Contoso.App.ViewModels
                 if (Set(ref _selectedDiscipline, value))
                 {
                     // Clear out the existing discipline.
-                    SelectedDiscipline = null;
+                    //SelectedDiscipline = null;
                     if (_selectedDiscipline != null)
                     {
-                        Task.Run(() => LoadCustomer(_selectedDiscipline.Id));
+                        Task.Run(() => LoadDiscipline(_selectedDiscipline.Id));
                     }
                     OnPropertyChanged(nameof(SelectedDisciplineGrandTotalFormatted));
                 }
@@ -97,7 +97,7 @@ namespace Contoso.App.ViewModels
         /// SelectedCustomer property.
         /// </summary>
         /// <param name="customerId">The customer to load.</param>
-        private async void LoadCustomer(Guid disciplineId)
+        private async void LoadDiscipline(Guid disciplineId)
         {
             var discipline = await App.Repository.Disciplines.GetAsync(disciplineId);
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
@@ -140,16 +140,16 @@ namespace Contoso.App.ViewModels
             Disciplines.Clear();
             if (!string.IsNullOrEmpty(query))
             {
-                var results = await App.Repository.Disciplines.GetAsync(query);
-                await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
-                {
-                    //TODO: change type in repos 
-                    //foreach (Discipline discipline in results)
-                    //{
-                    //    Disciplines.Add(discipline);
-                    //}
-                    IsLoading = false;
-                });
+                //var results = await App.Repository.Disciplines.GetAsync(query);
+                //await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
+                //{
+                //    TODO: change type in repos
+                //    foreach (Discipline discipline in results)
+                //    {
+                //        Disciplines.Add(discipline);
+                //    }
+                //    IsLoading = false;
+                //});
             }
         }
 
@@ -178,8 +178,7 @@ namespace Contoso.App.ViewModels
                 var resultList = MasterDisciplineList
                     .Where(discipline => parameters
                         .Any(parameter =>
-                            discipline.Name.StartsWith(parameter) ||
-                            discipline.AcademyHours.Equals(int.Parse(parameter))));
+                            discipline.Name.StartsWith(parameter)));
 
                 foreach (Discipline discipline in resultList)
                 {

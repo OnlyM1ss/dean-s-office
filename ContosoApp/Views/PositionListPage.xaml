@@ -77,7 +77,7 @@
                 RelativePanel.LeftOf="PositionSearchBox"
                 RelativePanel.RightOf="PageTitle">
                 <AppBarButton
-                    Click="{x:Bind ViewModel.LoadPositions}"
+                    Click="{x:Bind ViewModel.AddPosition}"
                     Icon="Add"
                     Label="Add" />
                 <AppBarButton

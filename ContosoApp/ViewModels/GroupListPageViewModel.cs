@@ -94,7 +94,7 @@ namespace Contoso.App.ViewModels
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                foreach (var group in Groups)
+                foreach (var group in groups)
                 {
                     Groups.Add(group);
                     MasterGroupList.Add(group);

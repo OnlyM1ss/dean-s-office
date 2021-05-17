@@ -25,9 +25,15 @@ namespace Contoso.Repository.Sql
                 .ToListAsync();
         }
 
-        public Task<Discipline> GetAsync(string search)
+        public async Task<IEnumerable<Discipline>> GetAsync(string search)
         {
-            throw new NotImplementedException();
+            string[] parameters = search.Split(' ');
+            return await _db.Disciplines
+                .Where(discipline =>
+                    parameters.Any(parameter =>
+                        discipline.Name.StartsWith(parameter)))
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Discipline> GetAsync(Guid id)

@@ -79,6 +79,14 @@ namespace Contoso.App.ViewModels
             });
         }
 
+        public async void AddPosition()
+        {
+            var position = new Position();
+            position.Name = "матеша";
+            position.Id = new Guid();
+            position.Rating = 123;
+            await App.Repository.Positions.UpsertAsync(position);
+        }
         /// <summary>
         /// Retrieves orders from the data source.
         /// </summary>
@@ -94,7 +102,7 @@ namespace Contoso.App.ViewModels
 
             await DispatcherHelper.ExecuteOnUIThreadAsync(() =>
             {
-                foreach (var position in Positions)
+                foreach (var position in positions)
                 {
                     Positions.Add(position);
                     MasterPositionList.Add(position);
