@@ -26,3 +26,10 @@
   - [asp net](https://metanit.com/sharp/aspnet5/) проект, который берет на себя логику работы с сервером, написан что-то типа по [MVC](https://ru.wikipedia.org/wiki/Model-View-Controller)расмотрим поподробнее:
     - Controller - тут у нас логика обращения к серверу
     - все остальное при изучени Asp net XD
+# Как выглядит UI: 
+## all users 
+![alt text](ContosoApp/Assets/all_users.png)
+## teachers 
+![alt text](ContosoApp/Assets/teacher.png)
+## sign in (with windows account) 
+![alt text](ContosoApp/Assets/signing_in.png)
